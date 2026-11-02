@@ -1,0 +1,9 @@
+.env
+.env.bak*
+*.bak
+data/*.jsonl
+data/*.log
+bin/
+*.exe
+/whale-live
+.DS_Store

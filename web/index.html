@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>鲸鱼娘 · 桌宠直播</title>
+  <link rel="icon" type="image/svg+xml" href="/brand/dafeiyu/front.png">
+  <link rel="stylesheet" href="/css/app.css">
+  <script>
+    (function () {
+      var q = new URLSearchParams(location.search);
+      var obs = q.get("obs") === "1" || q.get("obs") === "true";
+      var bg = q.get("bg");
+      if (!bg) bg = obs ? "chroma" : (localStorage.getItem("whale-bg") || "studio");
+      if (["studio", "chroma", "magenta", "transparent"].indexOf(bg) < 0) bg = obs ? "chroma" : "studio";
+      document.documentElement.dataset.bg = bg;
+      if (obs) document.documentElement.classList.add("obs");
+      if (q.get("label") === "0") document.documentElement.classList.add("no-label");
+    })();
+  </script>
+</head>
+<body>
+  <div id="app">
+    <canvas id="stage" aria-label="鲸鱼娘"></canvas>
+    <div id="barrage" aria-hidden="true"></div>
+
+    <div id="fallback" hidden>
+      <div class="css-whale" id="css-whale">
+        <img class="official-logo" src="/brand/dafeiyu/fish_idle.png" alt="鲸鱼娘" width="360" height="390">
+      </div>
+    </div>
+
+    <div id="pay" aria-live="polite">
+      <div class="pay-top">
+        <span class="pay-label">今日工资</span>
+        <strong id="pay-amount">¥0</strong>
+        <span class="pay-goal">目标 ¥<b id="pay-goal">500</b></span>
+      </div>
+      <div class="pay-bar" aria-hidden="true"><i id="pay-fill"></i></div>
+      <p id="pay-toast" class="pay-toast" hidden></p>
+    </div>
+
+    <div id="bubble" class="is-hidden" aria-live="polite">
+      <div id="ask-row"><b id="who"></b><span id="ask"></span></div>
+      <p id="reply"></p>
+    </div>
+
+    <div id="plate">
+      <span class="led" id="led"></span>
+      <div>
+        <strong id="pet-name">鲸鱼娘</strong>
+        <small>社区鲸鱼娘 · 桌宠编程搭子</small>
+      </div>
+    </div>
+
+    <aside id="dock">
+      <header class="dock-head">
+        <div>
+          <p class="eyebrow">桌宠式 AI 小鲸鱼直播</p>
+          <h1>演播室</h1>
+        </div>
+        <span id="conn" class="pill">连接中</span>
+      </header>
+
+      <p id="brain-line" class="muted">正在确认大脑…</p>
+
+      <div id="pay-dock" class="pay-dock">
+        <div><span>工资</span><strong id="pay-dock-amount">¥0</strong></div>
+        <div><span>目标</span><strong>¥500</strong></div>
+        <p class="muted">回弹幕赚钱；摸鱼被主管抓住 -¥50。</p>
+      </div>
+
+      <div class="status-row">
+        <span id="state-pill" class="pill state-idle">待机</span>
+        <span id="queue-pill" class="pill">队列 0</span>
+      </div>
+
+      <section id="live-box" aria-label="实时弹幕">
+        <header>
+          <span>实时弹幕</span>
+          <small id="live-hint">等待接入…</small>
+        </header>
+        <div id="live-feed" role="log" aria-live="polite"></div>
+      </section>
+
+
+      <div class="btn-row">
+        <button type="button" id="mock-toggle">开始模拟连发</button>
+        <button type="button" id="obs-open">打开采集窗口</button>
+      </div>
+
+      <div class="seg" id="bg-switch" role="group" aria-label="背景">
+        <button type="button" data-bg="studio">演播室</button>
+        <button type="button" data-bg="chroma">绿幕</button>
+        <button type="button" data-bg="magenta">洋红</button>
+        <button type="button" data-bg="transparent">透明</button>
+      </div>
+
+      <p class="muted" id="size-line">采集尺寸 1280×720。弹幕由采集脚本实时推入；这块面板只看状态，推流用采集链接。</p>
+      <p class="link-row">
+        <a id="obs-link" href="/?obs=1" target="_blank" rel="noopener">OBS 链接</a>
+        <button type="button" id="copy-link">复制</button>
+      </p>
+      <p id="audio-hint">点一下页面，鲸鱼娘才能出声（edge-tts / 浏览器朗读）。</p>
+
+    </aside>
+  </div>
+
+  <script type="importmap">
+    { "imports": { "three": "/vendor/three.module.min.js" } }
+  </script>
+  <script type="module" src="/js/main.js"></script>
+  <script>
+    setTimeout(function () {
+      if (!document.documentElement.dataset.booted) {
+        var fb = document.getElementById("fallback");
+        if (fb) fb.hidden = false;
+      }
+    }, 1800);
+  </script>
+</body>
+</html>

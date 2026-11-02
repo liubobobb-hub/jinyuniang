@@ -1,0 +1,64 @@
+# 小鲸鱼桌宠直播配置。
+# .env 和环境变量里的非空值会覆盖这里。
+# 密钥只放在 .env 的 DEEPSEEK_API_KEY，不要写进这个文件。
+
+server:
+  # 只监听本机。要给同一局域网里的采集机用，改成 ":8787"。
+  addr: "127.0.0.1:8787"
+  web_dir: web
+
+deepseek:
+  api_key: ""
+  base_url: "https://api.deepseek.com"
+  model: deepseek-chat
+  timeout_sec: 25
+  max_tokens: 180
+  temperature: 0.8
+
+character:
+  name: "鲸鱼娘"
+  # 留空使用程序内置人设（internal/character/prompt.go）。
+  # 要改口吻，写成多行字符串，例如：
+  # system_prompt: |
+  #   你是「小鲸鱼」……
+  system_prompt: ""
+
+queue:
+  max_size: 32
+
+mock:
+  enabled: true
+  interval_sec: 12
+  auto_start: false
+
+log:
+  # 默认把弹幕和回复追加到这个 JSON 行文件，不需要数据库。
+  file: data/interactions.jsonl
+  mysql_enabled: false
+  # 例：user:pass@tcp(127.0.0.1:3306)/whale_live?parseTime=true&charset=utf8mb4
+  mysql_dsn: ""
+
+pet:
+  width: 1280
+  height: 720
+  chroma: "#00FF00"
+  # 每个字大约留这么多毫秒给嘴型和朗读，队列会等它说完再接下一条。
+  speak_ms_per_rune: 240
+  speak_min_ms: 2800
+  speak_max_ms: 14000
+
+ingest:
+  # 非空时，从别的机器 POST /api/danmaku 必须带 X-Ingest-Token。
+  # 本机页面和脚本默认放行。strict 为 true 时本机也要带令牌。
+  token: ""
+  strict: false
+
+tts:
+  # 本地 edge-tts（微软神经音色）。需要本机已 pip install edge-tts mutagen。
+  enabled: true
+  provider: edge
+  python: py
+  voice: zh-CN-XiaoyiNeural
+  rate: "+8%"
+  dir: data/audio
+  timeout_sec: 45
