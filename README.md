@@ -1,4 +1,4 @@
-# 桌宠式 AI 小鲸鱼直播
+﻿# 桌宠式 AI 小鲸鱼直播
 
 一只漂在代码编辑器旁边的小鲸鱼。观众发弹幕，她用口语讲一句编程，嘴巴跟着动。这个窗口拿去给 OBS 或直播伴侣采集，再推到抖音或其他平台。
 
@@ -67,6 +67,9 @@ powershell -ExecutionPolicy Bypass -File .\scripts\send_danmaku.ps1 -Text "小�
 `make demo` 等价于对默认地址推那句示意图弹幕。
 
 ## 本地语音（edge-tts）
+
+正式开播若要上云端合成（Azure / 火山 / 阿里 / Fish Audio），见 [docs/cloud-tts.md](docs/cloud-tts.md)。
+
 
 默认开启。AI 回完一句后，本机用 Microsoft 神经音色合成 MP3，页面播放，鲸鱼娘跟嘴；队列按真实音频时长再接下一条。
 
@@ -266,3 +269,4 @@ make fmt
 ```
 
 测试不访问真实的 DeepSeek，用本地假回复和 `httptest`。
+
